@@ -4,6 +4,17 @@ class Segment {
     this.point2 = point2;
   }
 
+  // create function to check if new segment exists
+  // by comparing new segment points to existing segment points
+  equals(seg) {
+    return this.includes(seg.point1) && this.includes(seg.point2);
+  }
+
+  // checks if a given point equals either point of an existing segment
+  includes(point) {
+    return this.point1.equals(point) || this.point2.equals(point);
+  }
+
   draw(ctx, width = 2, color = "black") {
     ctx.beginPath();
     ctx.lineWidth = width;

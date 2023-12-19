@@ -7,12 +7,89 @@
   <body>
     <h1>World Editor</h1>
     <canvas id="myCanvas"></canvas>
+    <div id="controls">
+      <button onclick="addRandomPoint()">Add Point</button>
+      <button onclick="addRandomSegment()">Add Segment</button>
+      <button onclick="removeRandomSegment()">Remove Segment</button>
+      <button onclick="removeRandomPoint()">Remove Point</button>
+      <button onclick="removeAll()">Remove All</button>
+    </div>
+
     <!-- add JavaScript scripts -->
     <script src="js/math/graph.js"></script>
     <script src="js/primitives/point.js"></script>
     <script src="js/primitives/segment.js"></script>
-    <!-- start JavaScript canvas here -->
+
     <script>
+      function removeAll() {
+        graph.dispose();
+        // clear canvas and redraw to see changes
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+      }
+
+      function removeRandomPoint() {
+        // first check to see if there are any points
+        if (graph.points.length == 0) {
+          console.log("no points");
+          return;
+        }
+        // get random index
+        const index = Math.floor(Math.random() * graph.points.length);
+        // remove point with random index
+        graph.removePoint(graph.points[index]);
+        // clear canvas and redraw to see changes
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+      }
+
+      function removeRandomSegment() {
+        // first check to see if there are any segments
+        if (graph.segments.length == 0) {
+          console.log("no segments");
+          return;
+        }
+        // get random index
+        const index = Math.floor(Math.random() * graph.segments.length);
+        // remove segment with random index
+        graph.removeSegment(graph.segments[index]);
+        // clear canvas and redraw to see changes
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+      }
+
+      // add segments to the existing points on the canvas
+      function addRandomSegment() {
+        // get length of the points array and multiply by a random number for random index
+        const index1 = Math.floor(Math.random() * graph.points.length);
+        const index2 = Math.floor(Math.random() * graph.points.length);
+        const success = graph.tryAddSegment(
+          new Segment(graph.points[index1], graph.points[index2])
+        );
+        // always clear the canvas before redrawing new elements
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+        console.log(success);
+      }
+
+
+      // add points to the canvas
+      function addRandomPoint() {
+        // attempt to add a point if it doesn't already exist
+        const success = graph.tryAddPoint(
+          new Point(
+            // make sure points are within the canvas
+            Math.random() * myCanvas.width,
+            Math.random() * myCanvas.height
+          )
+        );
+        // always clear the canvas before adding new elements
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+        console.log(success);
+      }
+
+      // start JavaScript canvas here
       myCanvas.width = 600;
       myCanvas.height = 600;
 
