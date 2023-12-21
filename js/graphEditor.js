@@ -16,46 +16,50 @@ class GraphEditor {
   }
 
   #addEventListeners() {
-    this.canvas.addEventListener("mousedown", (evt) => {
-      // right click
-      if (evt.button == 2) {
-        // prioritize deselecting a point over deleting one
-        if (this.selected) {
-          this.selected = null;
-        } else if (this.hovered) {
-          this.#removePoint(this.hovered);
-        }
-      }
-      // left click
-      if (evt.button == 0) {
-        // if mouse is near an existing point, select that point
-        if (this.hovered) {
-          this.#select(this.hovered)
-          this.selected = this.hovered;
-          this.dragging = true;
-          return;
-        }
-        // add point where mouse clicks
-        this.graph.addPoint(this.mouse);
-        // add segment
-        this.#select(this.mouse);
-        this.hovered = this.mouse;
-      }
-    });
-
-    this.canvas.addEventListener("mousemove", (evt) => {
-      // get mouse location
-      this.mouse = new Point(evt.offsetX, evt.offsetY);
-      // check to see if the current mouse point is near an existing point (threshold of 10)
-      this.hovered = getNearestPoint(this.mouse, this.graph.points, 10);
-      if (this.dragging == true) {
-        this.selected.x = this.mouse.x;
-        this.selected.y = this.mouse.y;
-      }
-    });
+    // must bind the graphEditor as "this" otherwise it will assume "this" is the canvas
+    this.canvas.addEventListener("mousedown", this.#handleMouseDown.bind(this));
+    this.canvas.addEventListener("mousemove", this.#handleMouseMove.bind(this));
     // prevent menu from popping up
     this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
     this.canvas.addEventListener("mouseup", () => this.dragging = false);
+    }
+
+  #handleMouseDown(evt) {
+    // right click
+    if (evt.button == 2) {
+      // prioritize deselecting a point over deleting one
+      if (this.selected) {
+        this.selected = null;
+      } else if (this.hovered) {
+        this.#removePoint(this.hovered);
+      }
+    }
+    // left click
+    if (evt.button == 0) {
+      // if mouse is near an existing point, select that point
+      if (this.hovered) {
+        this.#select(this.hovered)
+        this.selected = this.hovered;
+        this.dragging = true;
+        return;
+      }
+      // add point where mouse clicks
+      this.graph.addPoint(this.mouse);
+      // add segment
+      this.#select(this.mouse);
+      this.hovered = this.mouse;
+    }
+  }
+
+  #handleMouseMove(evt) {
+    // get mouse location
+    this.mouse = new Point(evt.offsetX, evt.offsetY);
+    // check to see if the current mouse point is near an existing point (threshold of 10)
+    this.hovered = getNearestPoint(this.mouse, this.graph.points, 10);
+    if (this.dragging == true) {
+      this.selected.x = this.mouse.x;
+      this.selected.y = this.mouse.y;
+    }
   }
 
   #select(point) {
