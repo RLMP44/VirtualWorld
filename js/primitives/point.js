@@ -10,7 +10,7 @@ class Point {
 
   // create point
   // pass in multiple params or allow them to be blank
-  draw(ctx, { size = 18, color = "black", outline = false } = {} ) {
+  draw(ctx, { size = 18, color = "black", outline = false, fill = false } = {} ) {
     const radius = size / 2;
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -24,6 +24,12 @@ class Point {
       // Math.PI * 2 to draw a complete circle
       ctx.arc(this.x, this.y, radius * 0.6, 0, Math.PI * 2);
       ctx.stroke();
+    }
+    if (fill) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, radius * 0.4, 0 , Math.PI * 2);
+      ctx.fillStyle = "yellow";
+      ctx.fill();
     }
   }
 }
