@@ -11,7 +11,9 @@
     </div>
 
     <!-- add JavaScript scripts -->
+    <script src="js/graphEditor.js"></script>
     <script src="js/math/graph.js"></script>
+    <script src="js/math/utils.js"></script>
     <script src="js/primitives/point.js"></script>
     <script src="js/primitives/segment.js"></script>
 
@@ -36,7 +38,16 @@
 
       // pass points and segments to graph as an array
       const graph = new Graph([point1, point2, point3, point4], [seg1, seg2, seg3, seg4]);
-      graph.draw(ctx);
+      const graphEditor = new GraphEditor(myCanvas, graph);
+
+      animate();
+
+      function animate() {
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graphEditor.display();
+        requestAnimationFrame(animate);
+      }
+
     </script>
   </body>
 </html>
