@@ -28,12 +28,14 @@ class GraphEditor {
         // if mouse is near an existing point, select that point
         if (this.hovered) {
           this.selected = this.hovered;
+          this.dragging = true;
           return;
         }
         // add point where mouse clicks
         this.graph.addPoint(mouse);
         this.selected = mouse;
         this.hovered = mouse;
+        this.dragging = false;
       }
     });
 
@@ -42,9 +44,14 @@ class GraphEditor {
       const mouse = new Point(evt.offsetX, evt.offsetY);
       // check to see if the current mouse point is near an existing point (threshold of 10)
       this.hovered = getNearestPoint(mouse, this.graph.points, 10);
+      if (this.dragging == true) {
+        this.selected.x = mouse.x;
+        this.selected.y = mouse.y;
+      }
     });
     // prevent menu from popping up
     this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
+    this.canvas.addEventListener("mouseup", () => this.dragging = false);
   }
 
   // prevents point from still being visible when hovered after being deleted
