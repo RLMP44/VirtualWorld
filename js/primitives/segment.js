@@ -15,15 +15,18 @@ class Segment {
     return this.point1.equals(point) || this.point2.equals(point);
   }
 
-  draw(ctx, width = 2, color = "black") {
+  draw(ctx, { width = 2, color = "black", dash = [] } = {}) {
     ctx.beginPath();
     ctx.lineWidth = width;
     ctx.strokeStyle = color;
+    ctx.setLineDash(dash);
     // set the position
     ctx.moveTo(this.point1.x, this.point1.y);
     // set end point, detail it will be a line that is drawn
     ctx.lineTo(this.point2.x, this.point2.y);
     // connect the nodes/dots
     ctx.stroke();
+    // reset the dashed lines afterwards
+    ctx.setLineDash([]);
   }
 }
