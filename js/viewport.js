@@ -17,6 +17,13 @@ class Viewport {
   }
 
   #handleMouseWheel(evt) {
-    console.log(evt.deltaY);
+    // update the zoom of the screen with the deltaY from the mousewheel
+    const dir = Math.sign(evt.deltaY);
+    // define how much zoom will change
+    const step = 0.1;
+    this.zoom += dir * step;
+    // one-liner to keep zoom between one and 5
+    this.zoom = Math.max(1, Math.min(5, this.zoom));
+    console.log(this.zoom);
   }
 }
