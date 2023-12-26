@@ -56,7 +56,7 @@ class GraphEditor {
     // get mouse location
     // this.mouse = new Point(evt.offsetX, evt.offsetY);
     // get mouse location from the viewport
-    this.mouse = this.viewport.getMouse(evt);
+    this.mouse = this.viewport.getMouse(evt, true);
     // check to see if the current mouse point is near an existing point (threshold of 10)
     this.hovered = getNearestPoint(this.mouse, this.graph.points, 10 * this.viewport.zoom);
     if (this.dragging == true) {

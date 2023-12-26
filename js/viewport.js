@@ -20,16 +20,30 @@ class Viewport {
     this.#addEventListeners();
   }
 
+  reset() {
+    this.ctx.restore();
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.save();
+    this.ctx.translate(this.center.x, this.center.y);
+    this.ctx.scale(1 / this.zoom, 1 / this.zoom);
+    // let viewport calculate offset and animate constantly to see results
+    const offset = this.getOffset();
+    this.ctx.translate(offset.x, offset.y);
+  }
+
   // mouse needs context to know what level of zoom it is
   // so it can place points accurately
   // called in the graphEditor
-  getMouse(evt) {
-    return new Point(
+  getMouse(evt, subtractDragOffset = false) {
+    const point = new Point(
       // subtract center from offset to ensure starting position is correct
       // subtract this.offset.y or x from zoom to ensure points come in at correct spot
       (evt.offsetX - this.center.x) * this.zoom - this.offset.x,
       (evt.offsetY - this.center.y) * this.zoom - this.offset.y
-    )
+    );
+    // subtract drag offset to make sure segment attaches to mouse
+    // during drag motions
+    return subtractDragOffset ? subtract(point, this.drag.offset) : point;
   }
 
   getOffset () {
