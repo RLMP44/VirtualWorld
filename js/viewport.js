@@ -11,6 +11,16 @@ class Viewport {
     this.#addEventListeners();
   }
 
+  // mouse needs context to know what level of zoom it is
+  // so it can place points accurately
+  // called in the graphEditor
+  getMouse(evt) {
+    return new Point(
+      evt.offsetX * this.zoom,
+      evt.offsetY * this.zoom
+    )
+  }
+
   #addEventListeners() {
     // listening to mouse wheel
     this.canvas.addEventListener("mousewheel", this.#handleMouseWheel.bind(this));
@@ -24,6 +34,5 @@ class Viewport {
     this.zoom += dir * step;
     // one-liner to keep zoom between one and 5
     this.zoom = Math.max(1, Math.min(5, this.zoom));
-    console.log(this.zoom);
   }
 }
