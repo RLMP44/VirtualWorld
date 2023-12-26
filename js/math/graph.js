@@ -4,6 +4,20 @@ class Graph {
     this.segments = segments;
   }
 
+  // class function
+  // Must define points and segs from loaded JSON bc it loses functionality
+  static load(info) {
+    // generate a new point from the JSON object
+    // loop through points and map to new points
+    const points = info.points.map((i) => new Point(i.x, i.y));
+    const segments = info.segments.map((i) => new Segment(
+      // need to associate new points with original segments
+      points.find((p) => p.equals(i.point1)),
+      points.find((p) => p.equals(i.point2))
+    ));
+    return new Graph(points, segments);
+  }
+
   // adds points to the canvas when button is pushed
   addPoint(point) {
     this.points.push(point);
