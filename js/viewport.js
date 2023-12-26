@@ -25,8 +25,10 @@ class Viewport {
   // called in the graphEditor
   getMouse(evt) {
     return new Point(
-      evt.offsetX * this.zoom,
-      evt.offsetY * this.zoom
+      // subtract center from offset to ensure starting position is correct
+      // subtract this.offset.y or x from zoom to ensure points come in at correct spot
+      (evt.offsetX - this.center.x) * this.zoom - this.offset.x,
+      (evt.offsetY - this.center.y) * this.zoom - this.offset.y
     )
   }
 
