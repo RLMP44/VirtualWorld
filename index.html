@@ -62,7 +62,7 @@
         graphEditor.display();
         // replaced with envelope
         // new Polygon(graph.points).draw(ctx);
-        new Envelope(graph.segments[0], 80).draw(ctx);
+        new Envelope(graph.segments[0], 60, 10).draw(ctx);
         requestAnimationFrame(animate);
       }
 

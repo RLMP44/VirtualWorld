@@ -1,10 +1,10 @@
 class Envelope {
-  constructor(skeleton, width) {
+  constructor(skeleton, width, roundness = 1) {
     this.skeleton = skeleton;
-    this.poly = this.#generatePolygon(width);
+    this.poly = this.#generatePolygon(width, roundness);
   }
 
-  #generatePolygon(width) {
+  #generatePolygon(width, roundness) {
     const {point1, point2 } = this.skeleton;
 
     const radius = width / 2;
@@ -22,14 +22,17 @@ class Envelope {
     // const point1_cw = translate(point1, alpha_cw, radius);
 
     // adds border radius manually
-    const step = Math.PI / 10;
+    // doesn't allow border radius of 0
+    const step = Math.PI / Math.max(1, roundness);
+    // adds a small bit to make sure "i" reaches the alpha_cw value
+    const eps = step / 2;
     const points = [];
     // add points to be used to make polygon
-    for (let i = alpha_ccw; i <= alpha_cw; i += step) {
+    for (let i = alpha_ccw; i <= alpha_cw + eps; i += step) {
       points.push(translate(point1, i, radius));
     }
     // handles the second point but turns 180 degrees so rounded edge is on the outside
-    for (let i = alpha_ccw; i <= alpha_cw; i += step) {
+    for (let i = alpha_ccw; i <= alpha_cw + eps; i += step) {
       points.push(translate(point2, Math.PI + i, radius));
     }
 
