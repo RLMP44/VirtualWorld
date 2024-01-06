@@ -26,3 +26,15 @@ function subtract(point1, point2) {
 function scale(point, scaler) {
   return new Point(point.x * scaler, point.y * scaler);
 }
+
+function translate(loc, angle, offset) {
+  return new Point(
+    loc.x + Math.cos(angle) * offset,
+    loc.y + Math.sin(angle) * offset
+  )
+}
+
+function angle(point) {
+  // arc tangent 2 method
+  return Math.atan2(point.y, point.x)
+}
