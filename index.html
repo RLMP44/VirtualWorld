@@ -13,6 +13,7 @@
     </div>
 
     <!-- add JavaScript scripts -->
+    <script src="js/world.js"></script>
     <script src="js/graphEditor.js"></script>
     <script src="js/viewport.js"></script>
     <script src="js/math/graph.js"></script>
@@ -51,6 +52,8 @@
       const graph = graphInfo
         ? Graph.load(graphInfo)
         : new Graph();
+      const world = new World(graph);
+
       const viewport = new Viewport(myCanvas);
       // initialize with the viewport so it knows level of zoom
       const graphEditor = new GraphEditor(viewport, graph);
@@ -59,10 +62,13 @@
 
       function animate() {
         viewport.reset();
+        world.generate();
+        world.draw(ctx);
         graphEditor.display();
         // replaced with envelope
         // new Polygon(graph.points).draw(ctx);
-        new Envelope(graph.segments[0], 60, 10).draw(ctx);
+        // replaced by generating the world before graphEditor.display()
+        // new Envelope(graph.segments[0], 60, 10).draw(ctx);
         requestAnimationFrame(animate);
       }
 
