@@ -44,7 +44,12 @@ class Polygon {
     return intersections;
   }
 
-
+  // testing the break method
+  drawSegments(ctx) {
+    for (const seg of this.segments) {
+      seg.draw(ctx, { color: getRandomColor() });
+    }
+  }
 
   draw(ctx, { stroke = "blue", lineWidth = 2, fill = "rgba(0,0,255,0.3)" } = {}) {
     ctx.beginPath();
