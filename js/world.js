@@ -1,5 +1,5 @@
 class World {
-  constructor(graph, roadWidth = 100, roadRoundness = 3) {
+  constructor(graph, roadWidth = 100, roadRoundness = 10) {
     this.graph = graph;
     this.roadWidth = roadWidth;
     this.roadRoundness = roadRoundness;
@@ -27,9 +27,14 @@ class World {
   }
 
   draw(ctx) {
+    // customize road appearance
     for (const env of this.envelopes) {
-      env.draw(ctx);
+      env.draw(ctx, { fill: "#BBB", stroke: "#BBB", lineWidth: 15 });
     };
+    // customize road midline appearance
+    for (const seg of this.graph.segments) {
+      seg.draw(ctx, { color: "white", width: 4, dash: [10, 10] })
+    }
     // red intersection points used for debugging but not needed anymore
     // for (const int of this.intersections) {
     //   int.draw(ctx, { color: "red", size: 6 });

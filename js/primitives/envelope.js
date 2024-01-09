@@ -39,8 +39,9 @@ class Envelope {
     return new Polygon(points);
   }
 
-  draw(ctx) {
-    this.poly.draw(ctx);
-    this.poly.drawSegments(ctx);
+  draw(ctx, options) {
+    this.poly.draw(ctx, options);
+    // colorful highlighting for debugging
+    // this.poly.drawSegments(ctx);
   }
 }

@@ -64,6 +64,7 @@
         viewport.reset();
         world.generate();
         world.draw(ctx);
+        ctx.globalAlpha = 0.2;
         graphEditor.display();
         // replaced with envelope
         // new Polygon(graph.points).draw(ctx);
