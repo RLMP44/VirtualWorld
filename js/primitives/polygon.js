@@ -83,6 +83,25 @@ class Polygon {
     }
   }
 
+  containsSegment(seg) {
+    const midpoint = average(seg.point1, seg.point2);
+    return this.containsPoint(midpoint);
+  }
+
+  containsPoint(point) {
+    const outerPoint = new Point(-1000, -1000);
+    let intersectionCount = 0;
+    for (const seg of this.segments) {
+      const int = getIntersection(outerPoint, point, seg.point1, seg.point2);
+      if (int) {
+        intersectionCount++;
+      }
+    }
+    // if intersectionCount is even, we are outside of a polygon
+    // odd numbers mean we entered and didn't leave, so inside a polygon
+    return intersectionCount % 2 == 1;
+  }
+
   // testing the break method
   drawSegments(ctx) {
     for (const seg of this.segments) {
