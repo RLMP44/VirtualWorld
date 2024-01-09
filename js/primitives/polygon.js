@@ -11,6 +11,17 @@ class Polygon {
     }
   }
 
+  static multiBreak(polys) {
+    // loop over all polygons
+    for (let i = 0; i < polys.length - 1; i++) {
+      // loop again to compare all polys against each other
+      // but make sure to keep comparing only the subsequent poly against the rest
+      for (let j = i + 1; j < polys.length; j++) {
+        Polygon.break(polys[i], polys[j]);
+      }
+    }
+  }
+
   static break(poly1, poly2) {
     const segs1 = poly1.segments;
     const segs2 = poly2.segments;

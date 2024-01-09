@@ -17,18 +17,19 @@ class World {
       );
     }
 
-    this.intersections = Polygon.break(
-      // breaks apart two intersection envelopes to create smoother intersections
-      this.envelopes[0].poly,
-      this.envelopes[1].poly
-    );
+    // this.intersections = Polygon.break(
+    //   // breaks apart two intersection envelopes to create smoother intersections
+    //   this.envelopes[0].poly,
+    //   this.envelopes[1].poly
+    // );
+    Polygon.multiBreak(this.envelopes.map((e) => e.poly));
   }
 
   draw(ctx) {
     for (const env of this.envelopes) {
       env.draw(ctx);
     };
-    // used for debugging but not needed anymore
+    // red intersection points used for debugging but not needed anymore
     // for (const int of this.intersections) {
     //   int.draw(ctx, { color: "red", size: 6 });
     // }
