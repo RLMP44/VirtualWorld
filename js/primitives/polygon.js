@@ -11,6 +11,37 @@ class Polygon {
     }
   }
 
+  // create a method that will break apart all polygons at intersections
+  // and then delete any intersecting ones
+  static union(polys) {
+    Polygon.multiBreak(polys);
+    const keptSegments = [];
+    // loop over polys
+    for (let i = 0; i < polys.length; i++) {
+      // loop over segments of one poly
+      for (const seg of polys[i].segments) {
+        // keep segment unless instructed otherwise
+        let keep = true;
+        // loop over polys again
+        for (let j = 0; j < polys.length; j++) {
+          // as long as poly from first loop and third loop aren't the same
+          if (i != j) {
+            // check to see if current j poly contains the segment from first poly loop
+            if (polys[j].containsSegment(seg)) {
+              // if it does, it is intersecting and doesn't need to be kept
+              keep = false;
+              break;
+            }
+          }
+        }
+        if (keep) {
+          keptSegments.push(seg);
+        }
+      }
+    }
+    return keptSegments;
+  }
+
   static multiBreak(polys) {
     // loop over all polygons
     for (let i = 0; i < polys.length - 1; i++) {
