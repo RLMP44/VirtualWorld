@@ -14,7 +14,6 @@ class Polygon {
   static break(poly1, poly2) {
     const segs1 = poly1.segments;
     const segs2 = poly2.segments;
-    const intersections = [];
     // loop over both arrays simultaneously
     for (let i = 0; i < segs1.length; i++) {
       for (let j = 0; j < segs2.length; j++) {
@@ -26,7 +25,6 @@ class Polygon {
         // if there is, make sure the offset isn't too small
         if (int && int.offset != 1 && int.offset != 0) {
           const point = new Point(int.x, int.y);
-          intersections.push(point);
           // will break envelopes at overlap to divide into two segments
           // overlapping segments will be then deleted to clean up roads
           let aux = segs1[i].point2;
@@ -41,13 +39,12 @@ class Polygon {
         }
       }
     }
-    return intersections;
   }
 
   // testing the break method
   drawSegments(ctx) {
     for (const seg of this.segments) {
-      seg.draw(ctx, { color: getRandomColor() });
+      seg.draw(ctx, { color: getRandomColor(), width: 5 });
     }
   }
 
