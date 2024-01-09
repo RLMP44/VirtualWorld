@@ -27,11 +27,24 @@ class Polygon {
         if (int && int.offset != 1 && int.offset != 0) {
           const point = new Point(int.x, int.y);
           intersections.push(point);
+          // will break envelopes at overlap to divide into two segments
+          // overlapping segments will be then deleted to clean up roads
+          let aux = segs1[i].point2;
+          segs1[i].point2 = point;
+          // add new segment as original point2
+          segs1.splice(i + 1, 0, new Segment(point, aux));
+          // repeat for other segment
+          aux = segs2[j].point2;
+          segs2[j].point2 = point;
+          segs2.splice(j + 1, 0, new Segment(point, aux));
+
         }
       }
     }
     return intersections;
   }
+
+
 
   draw(ctx, { stroke = "blue", lineWidth = 2, fill = "rgba(0,0,255,0.3)" } = {}) {
     ctx.beginPath();
