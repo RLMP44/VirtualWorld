@@ -49,7 +49,17 @@ class World {
       );
     }
 
+    // create guides to determine if a building can fit around a road
     const guides = Polygon.union(tmpEnvelopes.map((e) => e.poly));
+
+    // loop through segments in guides to determine if a building is possible
+    for (let i = 0; i < guides.length; i++) {
+      const seg = guides[i];
+      if (seg.length() < this.buildingMinLength) {
+        guides.splice(i, 1);
+        i--;
+      }
+    }
 
     return guides;
   }
