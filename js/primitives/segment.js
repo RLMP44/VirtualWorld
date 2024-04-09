@@ -8,6 +8,11 @@ class Segment {
     return distance(this.point1, this.point2);
   }
 
+  directionVector() {
+    return normalize(
+      subtract(this.point1, this.point2));
+  }
+
   // create function to check if new segment exists
   // by comparing new segment points to existing segment points
   equals(seg) {
