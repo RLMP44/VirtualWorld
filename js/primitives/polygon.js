@@ -83,6 +83,17 @@ class Polygon {
     }
   }
 
+  intersectsPoly(poly) {
+    for (let s1 of this.segments) {
+      for (let s2 of poly.segments) {
+        if (getIntersection(s1.point1, s1.point2, s2.point1, s2.point2)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   containsSegment(seg) {
     const midpoint = average(seg.point1, seg.point2);
     return this.containsPoint(midpoint);

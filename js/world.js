@@ -87,6 +87,16 @@ class World {
       bases.push(new Envelope(seg, this.buildingWidth).poly);
     }
 
+    // check for intersecting building bases and remove one
+    for (let i = 0; i < bases.length - 1; i++) {
+      for (let j = i + 1; j < bases.length; j++) {
+        if (bases[i].intersectsPoly(bases[j])) {
+          bases.splice(j, 1);
+          j--;
+        }
+      };
+    }
+
     return bases;
   }
 
