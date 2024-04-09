@@ -48,6 +48,7 @@ class World {
         )
       );
     }
+    return tmpEnvelopes;
   }
 
   draw(ctx) {
@@ -65,6 +66,9 @@ class World {
     // }
     for (const seg of this.roadBorders) {
       seg.draw(ctx, { color: "white", width: 4 });
+    }
+    for (const bld of this.buildings) {
+      bld.draw(ctx);
     }
   }
 }
