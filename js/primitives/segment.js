@@ -9,8 +9,7 @@ class Segment {
   }
 
   directionVector() {
-    return normalize(
-      subtract(this.point1, this.point2));
+    return normalize(subtract(this.point2, this.point1));
   }
 
   // create function to check if new segment exists
