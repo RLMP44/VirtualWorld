@@ -40,7 +40,7 @@ class World {
   #generateBuildings() {
     const tmpEnvelopes = [];
     for (const seg of this.graph.segments) {
-      temEnvelopes.push(
+      tmpEnvelopes.push(
         new Envelope(
           seg,
           this.roadWidth + this.buildingWidth + this.spacing * 2,
