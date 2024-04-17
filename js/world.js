@@ -76,6 +76,7 @@ class World {
         for (const tree of trees) {
           if (distance(tree, point) < this.treeSize) {
             keep = false;
+            break;
           }
         }
       }
