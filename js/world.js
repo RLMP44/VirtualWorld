@@ -5,6 +5,7 @@ class World {
     buildingWidth = 150,
     buildingMinLength = 150,
     spacing = 50,
+    treeSize = 160
   ) {
     this.graph = graph;
     this.roadWidth = roadWidth;
@@ -12,6 +13,7 @@ class World {
     this.buildingWidth = buildingWidth;
     this.buildingMinLength = buildingMinLength;
     this.spacing = spacing;
+    this.treeSize = treeSize;
 
     this.envelopes = [];
     this.roadBorders = [];
@@ -68,6 +70,16 @@ class World {
           break;
         }
       }
+
+      // check if trees overlap each other
+      if (keep) {
+        for (const tree of trees) {
+          if (distance(tree, point) < this.treeSize) {
+            keep = false;
+          }
+        }
+      }
+
       if (keep) {
         trees.push(point);
       }
@@ -156,7 +168,7 @@ class World {
     }
 
     for (const tree of this.trees) {
-      tree.draw(ctx);
+      tree.draw(ctx, { size: this.treeSize, color: 'rgba(0,0,0,0.5)' });
     }
 
     for (const bld of this.buildings) {
