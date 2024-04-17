@@ -64,8 +64,9 @@ class World {
       );
 
       let keep = true;
+      // check if trees collide with buildings or road
       for (const poly of illegalPolys) {
-        if (poly.containsPoint(point)) {
+        if (poly.containsPoint(point) || poly.distanceToPoint(point) < (this.treeSize / 2)) {
           keep = false;
           break;
         }

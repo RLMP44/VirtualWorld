@@ -19,6 +19,10 @@ function average(point1, point2) {
   return new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
 }
 
+function dot(p1, p2) {
+  return p1.x * p2.x + p1.y * p2.y;
+}
+
 function add(point1, point2) {
   return new Point(point1.x + point2.x, point1.y + point2.y);
 }
