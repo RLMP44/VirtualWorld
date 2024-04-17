@@ -15,9 +15,10 @@ class World {
 
     this.envelopes = [];
     this.roadBorders = [];
-    this.buildings = []
+    this.buildings = [];
+    this.trees = [];
 
-    this.generate ();
+    this.generate();
   }
 
   generate() {
@@ -35,6 +36,28 @@ class World {
     // );
     this.roadBorders = Polygon.union(this.envelopes.map((e) => e.poly));
     this.buildings = this.#generateBuildings();
+    this.trees = this.#generateTrees();
+  }
+
+  #generateTrees(count = 10) {
+    const points = [
+      ...this.roadBorders.map((road) => [road.point1, road.point2]).flat(),
+      ...this.buildings.map((building) => building.points).flat()
+    ];
+    const left = Math.min(...points.map((point) => point.x));
+    const right = Math.max(...points.map((point) => point.x));
+    const top = Math.min(...points.map((point) => point.y));
+    const bottom = Math.max(...points.map((point) => point.y));
+
+    const trees = [];
+    while (trees.length < count) {
+      const point = new Point(
+        lerp(left, right, Math.random()),
+        lerp(bottom, top, Math.random())
+      );
+      trees.push(point);
+    }
+    return trees;
   }
 
   #generateBuildings() {
@@ -116,6 +139,11 @@ class World {
     for (const seg of this.roadBorders) {
       seg.draw(ctx, { color: "white", width: 4 });
     }
+
+    for (const tree of this.trees) {
+      tree.draw(ctx);
+    }
+
     for (const bld of this.buildings) {
       bld.draw(ctx);
     }
