@@ -84,6 +84,18 @@ class World {
         }
       }
 
+      // don't generate too far from road or building
+      if (keep) {
+        let closeToSomething = false;
+        for (const poly of illegalPolys) {
+          if (poly.distanceToPoint(point) < this.treeSize * 2) {
+            closeToSomething = true;
+            break;
+          }
+        }
+        keep = closeToSomething;
+      }
+
       if (keep) {
         trees.push(point);
         tryCount = 0;
