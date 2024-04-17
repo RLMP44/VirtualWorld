@@ -18,6 +18,10 @@ class Graph {
     return new Graph(points, segments);
   }
 
+  hash() {
+    return JSON.stringify(this);
+  }
+
   // adds points to the canvas when button is pushed
   addPoint(point) {
     this.points.push(point);

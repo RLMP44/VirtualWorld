@@ -59,11 +59,19 @@
       // initialize with the viewport so it knows level of zoom
       const graphEditor = new GraphEditor(viewport, graph);
 
+      // save hash as original
+      let oldGraphHash = graph.hash();
+
       animate();
 
       function animate() {
         viewport.reset();
-        world.generate();
+        // only generate if there have been changes
+        // so it isn't animating everything every second
+        if (graph.hash() != oldGraphHash) {
+          world.generate();
+          oldGraphHash = graph.hash();
+        }
         world.draw(ctx);
         ctx.globalAlpha = 0.2;
         graphEditor.display();
